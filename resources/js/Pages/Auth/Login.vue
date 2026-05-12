@@ -1,5 +1,17 @@
-<script setup>
+ <script setup>
+
 import { Head, Link, useForm } from '@inertiajs/vue3'
+
+import {
+    GraduationCap,
+    Mail,
+    Lock,
+    ArrowRight
+} from 'lucide-vue-next'
+
+defineProps({
+    status: String
+})
 
 const form = useForm({
     email: '',
@@ -8,91 +20,211 @@ const form = useForm({
 })
 
 const submit = () => {
-    form.post(route('login'))
+
+    form.post('/login')
+
 }
+
 </script>
 
 <template>
 
 <Head title="Login" />
 
-<div class="min-h-screen relative flex items-center justify-center bg-black overflow-hidden">
+<div class="min-h-screen grid lg:grid-cols-2 bg-[#020617]">
 
-    <!-- BACKGROUND -->
-    <img
-        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
-        class="absolute inset-0 w-full h-full object-cover opacity-40"
-    />
+    <!-- LEFT -->
 
-    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative hidden lg:flex items-center justify-center overflow-hidden">
 
-    <!-- CARD -->
-    <div class="relative w-full max-w-md p-10 rounded-3xl backdrop-blur-xl bg-white/10 border border-white/10 shadow-2xl">
+        <!-- IMAGE -->
 
-        <div class="text-center mb-10">
+        <img
+            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop"
+            class="absolute inset-0 w-full h-full object-cover"
+        />
 
-            <h1 class="text-4xl font-black text-white mb-3">
-                NexoraLearn
+        <!-- OVERLAY -->
+
+        <div class="absolute inset-0 bg-black/70"></div>
+
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/40 to-purple-600/30"></div>
+
+        <!-- CONTENT -->
+
+        <div class="relative z-10 max-w-lg px-10 text-white">
+
+            <div class="w-20 h-20 rounded-3xl bg-indigo-600 flex items-center justify-center shadow-2xl shadow-indigo-500/30 mb-8">
+
+                <GraduationCap class="w-10 h-10"/>
+
+            </div>
+
+            <h1 class="text-6xl font-black leading-tight">
+
+                Welcome
+                <br>
+
+                Back
+
             </h1>
 
-            <p class="text-slate-300">
-                Welcome back to your learning journey
+            <p class="mt-8 text-lg text-slate-200 leading-relaxed">
+
+                Continue your intelligent learning journey with NexoraLearn.
+
             </p>
 
         </div>
 
-        <form @submit.prevent="submit" class="space-y-6">
+    </div>
 
-            <div>
+    <!-- RIGHT -->
 
-                <label class="text-sm text-slate-300 block mb-2">
-                    Email
-                </label>
+    <div class="flex items-center justify-center p-8">
 
-                <input
-                    v-model="form.email"
-                    type="email"
-                    class="w-full px-5 py-4 rounded-2xl bg-white/10 border border-white/10 text-white outline-none focus:border-indigo-500"
-                />
+        <div class="w-full max-w-md">
 
-            </div>
+            <!-- MOBILE LOGO -->
 
-            <div>
+            <div class="lg:hidden flex justify-center mb-10">
 
-                <label class="text-sm text-slate-300 block mb-2">
-                    Password
-                </label>
+                <div class="w-20 h-20 rounded-3xl bg-indigo-600 flex items-center justify-center shadow-2xl shadow-indigo-500/30">
 
-                <input
-                    v-model="form.password"
-                    type="password"
-                    class="w-full px-5 py-4 rounded-2xl bg-white/10 border border-white/10 text-white outline-none focus:border-indigo-500"
-                />
+                    <GraduationCap class="w-10 h-10 text-white"/>
+
+                </div>
 
             </div>
 
-            <button
-                class="w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 transition text-white font-bold"
-            >
-                Login
-            </button>
+            <!-- CARD -->
 
-        </form>
+            <div class="bg-white/10 border border-white/10 backdrop-blur-2xl rounded-[32px] p-10 shadow-2xl">
 
-        <div class="mt-8 text-center">
+                <h2 class="text-4xl font-black text-white">
+                    Login
+                </h2>
 
-            <p class="text-slate-300">
+                <p class="text-slate-300 mt-3">
+                    Access your NexoraLearn dashboard.
+                </p>
 
-                Don't have an account?
+                <!-- STATUS -->
 
-                <Link
-                    href="/register"
-                    class="text-indigo-400 hover:text-indigo-300"
+                <div
+                    v-if="status"
+                    class="mt-6 text-green-400"
                 >
-                    Create account
-                </Link>
+                    {{ status }}
+                </div>
 
-            </p>
+                <!-- FORM -->
+
+                <form
+                    @submit.prevent="submit"
+                    class="mt-8 space-y-6"
+                >
+
+                    <!-- EMAIL -->
+
+                    <div>
+
+                        <label class="text-sm text-slate-300">
+                            Email Address
+                        </label>
+
+                        <div class="mt-2 relative">
+
+                            <Mail class="w-5 h-5 text-slate-400 absolute left-4 top-4"/>
+
+                            <input
+                                v-model="form.email"
+                                type="email"
+                                class="w-full bg-white/10 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                placeholder="Enter your email"
+                            />
+
+                        </div>
+
+                    </div>
+
+                    <!-- PASSWORD -->
+
+                    <div>
+
+                        <label class="text-sm text-slate-300">
+                            Password
+                        </label>
+
+                        <div class="mt-2 relative">
+
+                            <Lock class="w-5 h-5 text-slate-400 absolute left-4 top-4"/>
+ <input
+                                v-model="form.password"
+                                type="password"
+                                class="w-full bg-white/10 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                placeholder="Enter your password"
+                            />
+
+                        </div>
+
+                    </div>
+
+                    <!-- REMEMBER -->
+
+                    <div class="flex items-center justify-between text-sm">
+
+                        <label class="flex items-center gap-3 text-slate-300">
+
+                            <input
+                                v-model="form.remember"
+                                type="checkbox"
+                                class="rounded border-white/20 bg-white/10"
+                            />
+
+                            Remember me
+
+                        </label>
+
+                        <Link
+                            href="/forgot-password"
+                            class="text-indigo-300 hover:underline"
+                        >
+                            Forgot password?
+                        </Link>
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="w-full bg-indigo-600 hover:bg-indigo-500 transition py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-3 shadow-2xl shadow-indigo-500/30"
+                    >
+
+                        Login
+
+                        <ArrowRight class="w-5 h-5"/>
+
+                    </button>
+
+                </form>
+
+                <!-- REGISTER -->
+
+                <p class="text-slate-300 text-center mt-8">
+
+                    Don’t have an account?
+
+                    <Link
+                        href="/register"
+                        class="text-indigo-300 hover:underline"
+                    >
+                        Create account
+                    </Link>
+
+                </p>
+
+            </div>
 
         </div>
 
